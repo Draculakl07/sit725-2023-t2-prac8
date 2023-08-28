@@ -1,14 +1,26 @@
-let express = require('express');
-let app = express();
-let port = process.env.port || 3000;
-require('./dbConnection');
-let router = require('./routers/router');
+var express = require("express");
+var app = express();
+const client = require('./dbConnection');
 
-app.use(express.static(__dirname + '/'));
+let router = require('./routes/router'); 
+
+app.use(express.static(__dirname + '/')); 
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
-app.use('/api/cat', router);
+app.use(express.urlencoded({ extended: false }));
+app.use('/api', router); 
 
-app.listen(port, ()=>{
-    console.log('express server started');
+var port = process.env.port || 3000;
+
+client.connect(err => {
+    if (err) {
+        console.error('Failed to connect to MongoDB:', err);
+        process.exit(1);
+    } else {
+        console.log('Connected to MongoDB');
+        app.listen(port, () => {
+            console.log("App listening to: " + port);
+        });
+    }
 });
+
+module.exports = app; 
