@@ -5,7 +5,6 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
-//test will start after database has been connected.
 before(function(done) {
     this.timeout(20000);
     const client = require('../dbConnection');
@@ -52,7 +51,7 @@ describe('/POST cat', () => {
 
 describe('/DELETE/:id cat', () => {
     it('it should DELETE a cat given the id', (done) => {
-        let id = "64ec2d5eeb53136fca1bc0b0"; //Found the cat I created in MongoDB
+        let id = "64ec2d5eeb53136fca1bc0b0"; 
 
         chai.request(server)
             .delete('/api/cat/' + id)
