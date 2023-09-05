@@ -72,3 +72,8 @@ function deleteCat(id) {
         }
     })
 }
+let socket = io();
+
+socket.on('number', function(data){
+    console.log("Received number: " + data);
+});
